@@ -9,12 +9,13 @@ echo "Upgrade and installation common"
 sudo dnf -y  update
 sudo dnf -y  install vim net-tools git gcc
 
-echo "Git cloning AWX from krlex/awx github repo 7.0 version"
+echo "Git cloning AWX from krlex/awx github repo 9.0 version"
 sudo git clone https://github.com/krlex/awx $HOME/awx
 #chown -R vagrant vagrant $HOME/awx
 
 echo "Update and install Python3"
-sudo dnf -y install python3-pip.noarch python36 python36-devel python36-libs python36-tools
+sudo dnf -y install python3-pip.noarch python36 python2-libselinux.x86_64  #python36-devel python36-libs python36-tools
+sudo python3 -m pip install -U pip
 
 echo "Set up stable repo for docker"
 sudo dnf -y install dnf-plugin-core
@@ -43,7 +44,7 @@ sudo pip install docker ansible
 
 echo "Docker-compose starting ...."
 cd $TOOLS
-/usr/bin/docker-compose up
+/usr/local/bin/docker-compose up
 
 echo "Ansible configuration and installation"
 ansible-playbook -i ~/awx/installer/inventory ~/awx/installer/install.yml
